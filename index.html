@@ -18,8 +18,14 @@
   const speed = document.querySelector('.speed');
   const bar = speed.querySelector('.speed-bar');
   const video = document.querySelector('.flex');
+  let isClicked = false;
 
-  speed.addEventListener('mousemove', function(e) {
+  function hasClicked() {
+    isClicked = true;
+  }
+
+  function handleMove(e) {
+    if(!isClicked) return;
     const y = e.pageY - this.offsetTop;
     const percent = y / this.offsetHeight;
     const min = 0.4;
@@ -29,7 +35,11 @@
     bar.style.height = height;
     bar.textContent = playbackRate.toFixed(2) + 'x';
     video.playbackRate = playbackRate;
-  });
+  }
+
+  speed.addEventListener('mousedown', hasClicked);
+
+  speed.addEventListener('mousemove', handleMove);
 
 </script>
 </body>
